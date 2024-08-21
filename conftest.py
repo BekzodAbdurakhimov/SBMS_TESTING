@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 
 
+# test
 @pytest.fixture(scope='function')
 def driver():
     # Создаем экземпляр веб-драйвера
@@ -10,3 +11,4 @@ def driver():
     yield driver
     # Закрываем браузер после выполнения теста
     driver.quit()
+

@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 
+
 # test
 @pytest.fixture(scope='function')
 def driver():

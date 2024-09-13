@@ -40,7 +40,7 @@ def test_rate_plan(driver):
     login_locator_check = wait.until(EC.visibility_of_element_located(login_text_locator))
     assert login_locator_check.is_displayed(), "Не найден локатор входа"
 
-    time.sleep(5)
+    # time.sleep(5)
 
     login_input_locator = (By.CSS_SELECTOR, "input.sbms-textbox[name='user'][type='text']")
     password_input_locator = (By.CSS_SELECTOR, "input.sbms-textbox[name='password'][type='password']")
@@ -66,16 +66,24 @@ def test_rate_plan(driver):
                                                                                   "body").get_attribute(
             "style"))
 
-    time.sleep(5)
 
     # Вход в витрину
-    cabs = driver.find_element(By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрины"]')
-    cabs.click()
-    time.sleep(2)
 
-    subs_cabinet = driver.find_element(By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
+    # Локаторы для элементов меню
+    cabs_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрины"]')
+    subs_cabinet_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
+
+    # Ожидание кликабельности элемента "Витрины" и клик по нему
+    cabs = wait.until(EC.element_to_be_clickable(cabs_locator))
+    cabs.click()
+
+    # Ожидание кликабельности элемента "Витрина абонента" и клик по нему
+    subs_cabinet = wait.until(EC.element_to_be_clickable(subs_cabinet_locator))
     subs_cabinet.click()
-    time.sleep(2)
+
+    wait.until(
+        lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(
+            "style"))
 
     log_step('Витрина абонента открыта')
 

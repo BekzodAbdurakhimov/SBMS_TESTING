@@ -22,7 +22,7 @@ def test_rate_plan(driver):
     ws = wb.active
 
     driver.get("https://sbms.ucell/ps/sbms/shell.html")
-    wait = WebDriverWait(driver, 60)
+    wait = WebDriverWait(driver, 120)
 
     log_step(' ======== Смена ТП ========')
 
@@ -36,20 +36,26 @@ def test_rate_plan(driver):
         EC.visibility_of_element_located((By.ID, "proceed-link"))
     )
     go_to_link.click()
-    time.sleep(3)
     login_text_locator = (By.CSS_SELECTOR, '.login-caption > span')
     login_locator_check = wait.until(EC.visibility_of_element_located(login_text_locator))
     assert login_locator_check.is_displayed(), "Не найден локатор входа"
 
     time.sleep(5)
-    login_input_area = driver.find_element(By.CSS_SELECTOR, "input.sbms-textbox[name='user'][type='text']")
-    password_input_area = driver.find_element(By.CSS_SELECTOR, "input.sbms-textbox[name='password'][type='password']")
-    enter_btn = driver.find_element(By.CSS_SELECTOR, "button.sbms-button-ex")
 
+    login_input_locator = (By.CSS_SELECTOR, "input.sbms-textbox[name='user'][type='text']")
+    password_input_locator = (By.CSS_SELECTOR, "input.sbms-textbox[name='password'][type='password']")
+    enter_btn_locator = (By.CSS_SELECTOR, "button.sbms-button-ex")
+
+    # Ожидаем, пока поле ввода логина будет доступно для ввода
+    login_input_area = wait.until(EC.element_to_be_clickable(login_input_locator))
     login_input_area.send_keys(LOGIN)
-    time.sleep(2)
+
+    # Ожидаем, пока поле ввода пароля будет доступно для ввода
+    password_input_area = wait.until(EC.element_to_be_clickable(password_input_locator))
     password_input_area.send_keys(PASSWORD)
-    time.sleep(2)
+
+    # Ожидаем, пока кнопка "Войти" станет кликабельной
+    enter_btn = wait.until(EC.element_to_be_clickable(enter_btn_locator))
     enter_btn.click()
 
     log_step('Вход в SBMS выполнен')
@@ -122,8 +128,8 @@ def test_rate_plan(driver):
         finally:
             driver.switch_to.default_content()
 
-        input_field = driver.find_element(By.XPATH,
-                                          "//input[contains(@class, 'b-combobox__input') and @ng-readonly='states.readonly || states.disabled' and @ng-required='states.required']")
+        input_field = wait.until(EC.visibility_of_element_located((By.XPATH,
+                                                                   "//input[contains(@class, 'b-combobox__input') and @ng-readonly='states.readonly || states.disabled' and @ng-required='states.required']")))
         input_field.send_keys(RATE_PLAN_NAME_1)
         time.sleep(2)
 

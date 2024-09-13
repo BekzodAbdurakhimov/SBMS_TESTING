@@ -40,4 +40,3 @@ def get_and_save_user_data():
     else:
         print(f"Файл {config_path} не найден.")
 
-get_and_save_user_data()

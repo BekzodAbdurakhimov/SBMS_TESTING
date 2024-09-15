@@ -10,7 +10,8 @@ def get_and_save_user_data():
 
     # Проверяем, существует ли файл config.py
     if os.path.exists(config_path):
-        with open(config_path, 'r') as file:
+        # Открываем файл с явным указанием кодировки UTF-8 для чтения
+        with open(config_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
 
         # Флаги для отслеживания наличия переменных
@@ -32,11 +33,13 @@ def get_and_save_user_data():
         if not password_found:
             lines.append(f"PASSWORD = '{PASSWORD}'\n")
 
-        # Записываем обновлённые данные обратно в файл
-        with open(config_path, 'w') as file:
+        # Записываем обновлённые данные обратно в файл с кодировкой UTF-8
+        with open(config_path, 'w', encoding='utf-8') as file:
             file.writelines(lines)
 
         print(f"Логин и пароль успешно сохранены в {config_path}.")
     else:
         print(f"Файл {config_path} не найден.")
+
+
 

@@ -88,36 +88,44 @@ def test_rate_plan(driver):
     log_step('Витрина абонента открыта')
 
     # Ввод MSISDN
-    input_tel_number = driver.find_element(By.CLASS_NAME, "inp-text")
+    input_tel_number_locator = (By.CLASS_NAME, "inp-text")
+    input_tel_number = wait.until(EC.element_to_be_clickable(input_tel_number_locator))
     input_tel_number.send_keys("998501041717")
-    time.sleep(5)
+    # time.sleep(5)
 
     log_step('MSISDN введен')
 
     # Клик по кнопке ПОИСК
-    search_elements = driver.find_element(By.CSS_SELECTOR, 'ps-icon[icon="search-white"]')
+    search_elements_locator = (By.CSS_SELECTOR, 'ps-icon[icon="search-white"]')
+    search_elements = wait.until(EC.element_to_be_clickable(search_elements_locator))
     search_elements.click()
-    time.sleep(5)
+    # time.sleep(5)
 
-    approve_num_btn = driver.find_element(By.XPATH, "//span[@class='b-button__label' and text()='Да']/..")
+    approve_num_btn_locator = (By.XPATH, "//span[@class='b-button__label' and text()='Да']/..")
+    approve_num_btn = wait.until(EC.element_to_be_clickable(approve_num_btn_locator))
     approve_num_btn.click()
-    time.sleep(5)
+    # time.sleep(5)
 
     log_step('Поиск выполнен и номер подтвержден')
 
+    balance_of_subs_before = (By.CSS_SELECTOR, 'span#ps_customer_subscriber_summary_common_balance')
+    wait.until(EC.element_to_be_clickable(balance_of_subs_before))
     balance_before_activating_rate_plan = driver.find_element(By.CSS_SELECTOR, 'span#ps_customer_subscriber_summary_common_balance')
     balance_before_activating_rate_plan_text = balance_before_activating_rate_plan.text.replace('UZS', '').strip().replace(' ', '').split('.')[0]
     log_step(f'Баланс до подключения ТП: {int(balance_before_activating_rate_plan_text)}')
 
-    clients_btn = driver.find_element(By.XPATH, '//a[@class="menu__a-vertical" and text()="Клиенты"]')
+    clients_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Клиенты"]')
+    clients_btn = wait.until(EC.element_to_be_clickable(clients_btn_locator))
     clients_btn.click()
-    time.sleep(2)
+    # time.sleep(2)
 
-    abonents_btn = driver.find_element(By.XPATH, '//a[@class="menu__a-vertical" and text()="Абоненты"]')
+    abonents_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Абоненты"]')
+    abonents_btn = wait.until(EC.element_to_be_clickable(abonents_btn_locator))
     abonents_btn.click()
-    time.sleep(2)
+    # time.sleep(2)
 
-    services_cathegory_btn = driver.find_element(By.XPATH, '//a[@class="menu__a-vertical" and text()="Карточка абонента"]')
+    services_cathegory_btn = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Карточка абонента"]')
+    services_cathegory_btn = wait.until(EC.element_to_be_clickable(services_cathegory_btn))
     services_cathegory_btn.click()
     time.sleep(5)
 
@@ -128,7 +136,7 @@ def test_rate_plan(driver):
 
     if driver.find_element(By.ID, 'RTPL').text == RATE_PLAN_NAME_2:
         try:
-            change_rtpl_btn = WebDriverWait(driver, 10).until(
+            change_rtpl_btn = wait.until(
                 EC.element_to_be_clickable((By.ID, "BTN_CHANGE_RTPL"))
             )
             change_rtpl_btn.click()
@@ -149,13 +157,15 @@ def test_rate_plan(driver):
         log_step(f'Выбран {RATE_PLAN_NAME_1}')
         time.sleep(3)
 
-        change_rtpl_btn_final = driver.find_element(By.XPATH,
+        change_rtpl_btn_final_locator = (By.XPATH,
                                                     "//ps-button[@ng-click='change()' and @class='b-button ps-component']/span[contains(@class, 'b-button__label') and text()='Сменить ТП']")
+        change_rtpl_btn_final = wait.until(EC.element_to_be_clickable(change_rtpl_btn_final_locator))
         change_rtpl_btn_final.click()
-        time.sleep(2)
+        # time.sleep(2)
 
-        change_rtpl_yes = driver.find_element(By.XPATH,
+        change_rtpl_yes_locator = (By.XPATH,
                                               '//ps-button[@ng-repeat="button in config.buttons track by $index" and @ng-click="psDialog.close(button.result)" and @class="b-button ps-component"]/span[contains(@class, "b-button__label") and text()="Да"]')
+        change_rtpl_yes = wait.until(EC.element_to_be_clickable(change_rtpl_yes_locator))
         change_rtpl_yes.click()
         log_step(f'Смена ТП с {RATE_PLAN_NAME_2} на {RATE_PLAN_NAME_1} успешно выполнена!')
         ws['D1'] = f'Было {RATE_PLAN_NAME_2}, Стало: {RATE_PLAN_NAME_1}'
@@ -170,10 +180,11 @@ def test_rate_plan(driver):
         finally:
             driver.switch_to.default_content()
 
-        input_field = driver.find_element(By.XPATH,
+        input_field_locator = (By.XPATH,
                                           "//input[contains(@class, 'b-combobox__input') and @ng-readonly='states.readonly || states.disabled' and @ng-required='states.required']")
+        input_field = wait.until(EC.element_to_be_clickable(input_field_locator))
         input_field.send_keys(RATE_PLAN_NAME_2)
-        time.sleep(2)
+        # time.sleep(2)
 
         change_rtpl_checkbox = wait.until(
             EC.element_to_be_clickable((By.XPATH,
@@ -181,10 +192,11 @@ def test_rate_plan(driver):
         )
         change_rtpl_checkbox.click()
         log_step(f'Выбран {RATE_PLAN_NAME_2}')
-        time.sleep(3)
+        # time.sleep(2)
 
-        change_rtpl_btn_final = driver.find_element(By.XPATH,
+        change_rtpl_btn_final_locator = (By.XPATH,
                                                     "//ps-button[@ng-click='change()' and @class='b-button ps-component']/span[contains(@class, 'b-button__label') and text()='Сменить ТП']")
+        change_rtpl_btn_final = wait.until(EC.element_to_be_clickable(change_rtpl_btn_final_locator))
         change_rtpl_btn_final.click()
         # time.sleep(5)
 
@@ -208,13 +220,15 @@ def test_rate_plan(driver):
         refresh_btn.click()
         time.sleep(10)
 
+    balance_of_subs_after = (By.CSS_SELECTOR, 'span#ps_customer_subscriber_summary_common_balance')
+    wait.until(EC.element_to_be_clickable(balance_of_subs_after))
     balance_after_activating_rate_plan = driver.find_element(By.CSS_SELECTOR,
                                                                  'span#ps_customer_subscriber_summary_common_balance')
     balance_after_activating_rate_plan_text = \
     balance_after_activating_rate_plan.text.replace('UZS', '').strip().replace(' ', '').split('.')[0]
     log_step(f'Баланс после подключения ТП: {int(balance_after_activating_rate_plan_text)}')
 
-    time.sleep(3)
+    time.sleep(2)
 
     ws['A1'] = "СМЕНА ТП"
     ws['B1'] = balance_before_activating_rate_plan_text

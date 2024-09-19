@@ -223,7 +223,7 @@ def test_basic_operations(driver):
     log_step(f'Баланс после подключения ТП: {int(balance_after_activating_rate_plan_text)}')
 
     # Записываем данные в Excel
-    new_row = ['Смена ТП',
+    new_row = ['СМЕНА ТП',
                int(balance_before_activating_rate_plan_text),
                int(balance_after_activating_rate_plan_text),
                result_message]

@@ -236,4 +236,4 @@ def test_rate_plan(driver):
     ws['B1'] = balance_before_activating_rate_plan_text
     ws['C1'] = balance_after_activating_rate_plan_text
 
-    wb.save("результаты_смены_тп.xlsx")
+    wb.save("SBMS_AUTOTEST_RESULTS.xlsx")

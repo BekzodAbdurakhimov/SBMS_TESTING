@@ -114,6 +114,8 @@ def test_rate_plan(driver):
     balance_before_activating_rate_plan_text = balance_before_activating_rate_plan.text.replace('UZS', '').strip().replace(' ', '').split('.')[0]
     log_step(f'Баланс до подключения ТП: {int(balance_before_activating_rate_plan_text)}')
 
+# ============================= ТЕСТИРОВАНИЕ ТП НАЧИНАЕТСЯ ЗДЕСЬ =============================
+
     clients_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Клиенты"]')
     clients_btn = wait.until(EC.element_to_be_clickable(clients_btn_locator))
     clients_btn.click()
@@ -234,4 +236,4 @@ def test_rate_plan(driver):
     ws['B1'] = balance_before_activating_rate_plan_text
     ws['C1'] = balance_after_activating_rate_plan_text
 
-    wb.save("результаты_смены_тп.xlsx")
+    wb.save("SBMS_AUTOTEST_RESULTS.xlsx")

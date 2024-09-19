@@ -1,3 +1,4 @@
+from test_basic_operations import test_basic_operations
 from user_data import get_and_save_user_data
 from test_rate_plan import test_rate_plan
 from selenium import webdriver
@@ -13,6 +14,7 @@ def run_test_rate_plan():
     # Вызов функции теста
     try:
         test_rate_plan(driver)
+        test_basic_operations(driver)
     finally:
         driver.quit()
 

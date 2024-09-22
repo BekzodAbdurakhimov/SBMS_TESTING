@@ -65,7 +65,7 @@ def test_serv_activate(driver):
     enter_btn = wait.until(EC.element_to_be_clickable(enter_btn_locator))
     enter_btn.click()
 
-    print('Вход в SBMS выполнен')
+    log_step('Вход в SBMS выполнен')
 
     # Ждать пока страничка не загрузиться полностью
     wait.until(

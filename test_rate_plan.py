@@ -4,6 +4,8 @@ from datetime import datetime
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from trio import current_time
+
 from config import LOGIN, PASSWORD, RATE_PLAN_NAME_1, RATE_PLAN_NAME_2
 import pytest
 
@@ -235,5 +237,6 @@ def test_rate_plan(driver):
     ws['A1'] = "СМЕНА ТП"
     ws['B1'] = int(balance_before_activating_rate_plan_text)
     ws['C1'] = int(balance_after_activating_rate_plan_text)
+    ws['E1'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     wb.save("SBMS_AUTOTEST_RESULTS.xlsx")

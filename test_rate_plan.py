@@ -233,7 +233,7 @@ def test_rate_plan(driver):
     time.sleep(2)
 
     ws['A1'] = "СМЕНА ТП"
-    ws['B1'] = balance_before_activating_rate_plan_text
-    ws['C1'] = balance_after_activating_rate_plan_text
+    ws['B1'] = int(balance_before_activating_rate_plan_text)
+    ws['C1'] = int(balance_after_activating_rate_plan_text)
 
     wb.save("SBMS_AUTOTEST_RESULTS.xlsx")

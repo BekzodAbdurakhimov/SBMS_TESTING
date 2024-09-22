@@ -1,14 +1,39 @@
+from openpyxl import Workbook
 import time
+from datetime import datetime
+
+from openpyxl.reader.excel import load_workbook
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from config import LOGIN, PASSWORD, SMS_PACKAGE_NAME, SERVICE_NAME_1, SERVICE_NAME_2, PHONE_NUM
+from config import LOGIN, PASSWORD, SERVICE_NAME_1, SERVICE_NAME_2, PHONE_NUM
 
+LOG_FILE = "logs.txt"
+EXCEL_FILE = "SBMS_AUTOTEST_RESULTS.xlsx"
+
+
+def log_step(message):
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_message = f"[{current_time}] {message}\n"
+    print(log_message.strip())
+    with open(LOG_FILE, "a") as file:
+        file.write(log_message)
 
 def test_serv_activate(driver):
+    global wb, ws
+
+    # Попробуйте открыть существующий файл или создать новый
+    try:
+        wb = load_workbook(EXCEL_FILE)
+        ws = wb.active
+    except FileNotFoundError:
+        wb = Workbook()
+        ws = wb.active
 
     driver.get("https://sbms.ucell/ps/sbms/shell.html")
     wait = WebDriverWait(driver, 120)
+
+    log_step(' ======== Подключение Услуги ========')
 
     # Проверка кнопки
     detail_button_check = wait.until(
@@ -66,7 +91,7 @@ def test_serv_activate(driver):
         lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(
             "style"))
 
-    print('Витрина абонента открыта')
+    log_step('Витрина абонента открыта')
 
     # Ввод MSISDN
     input_tel_number_locator = (By.CLASS_NAME, "inp-text")
@@ -74,7 +99,7 @@ def test_serv_activate(driver):
     input_tel_number.send_keys(PHONE_NUM)
     # time.sleep(5)
 
-    print('MSISDN введен')
+    log_step('MSISDN введен')
 
     # Клик по кнопке ПОИСК
     search_elements_locator = (By.CSS_SELECTOR, 'ps-icon[icon="search-white"]')
@@ -87,15 +112,21 @@ def test_serv_activate(driver):
     approve_num_btn.click()
     # time.sleep(5)
 
-    print('Поиск выполнен и номер подтвержден')
+    log_step('Поиск выполнен и номер подтвержден')
 
+    # Получаем баланс до подключения услуги
     balance_of_subs_before = (By.CSS_SELECTOR, 'span#ps_customer_subscriber_summary_common_balance')
     wait.until(EC.element_to_be_clickable(balance_of_subs_before))
-    balance_before_activating_rate_plan = driver.find_element(By.CSS_SELECTOR,
+    balance_before_activating_service = driver.find_element(By.CSS_SELECTOR,
                                                               'span#ps_customer_subscriber_summary_common_balance')
-    balance_before_activating_rate_plan_text = \
-    balance_before_activating_rate_plan.text.replace('UZS', '').strip().replace(' ', '').split('.')[0]
-    print(f'Баланс до подключения ТП: {int(balance_before_activating_rate_plan_text)}')
+    balance_before_activating_service_text = \
+    balance_before_activating_service.text.replace('UZS', '').strip().replace(' ', '').split('.')[0]
+    log_step(f'Баланс до подключения ТП: {int(balance_before_activating_service_text)}')
+
+    # Получаем ТП
+    rate_plan_name_locator = (By.XPATH, "//span[@class='board-widget-fields_row_value' and contains(text(), 'Katta Doimiy')]")
+    rate_plan_name = wait.until(EC.visibility_of_element_located(rate_plan_name_locator))
+    rate_plan_name_text = rate_plan_name.text
 
     # ============================= ТЕСТИРОВАНИЕ УСЛУГИ НАЧИНАЕТСЯ ЗДЕСЬ =============================
 
@@ -110,6 +141,8 @@ def test_serv_activate(driver):
     services_cathegory_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Услуги"]')
     services_cathegory_btn = wait.until(EC.element_to_be_clickable(services_cathegory_btn_locator))
     services_cathegory_btn.click()
+
+    log_step('Перешли в раздел Услуги')
 
     """ 
     ============================================= РАЗДЕЛ УСЛУГИ ==================================================
@@ -126,15 +159,24 @@ def test_serv_activate(driver):
     # Открываем окно таблицы услуг
     packs_table_locator = (By.CSS_SELECTOR, 'table.n-grid.n-grid_checkable')
     wait.until(lambda driver: driver.find_element(*packs_table_locator).get_attribute("style") == "")
-    print('Модальное окно услуги успешно загрузился')
+    log_step('Модальное окно услуги успешно загрузился')
 
     # Ишем TRAFFIC+
+    # Получим название ТП
     pack_searcharea_locator = (By.CSS_SELECTOR, 'input.inp-text[ng-model="grd.filter.name"]')
     pack_searcharea = wait.until(EC.element_to_be_clickable(pack_searcharea_locator))
-    pack_searcharea.send_keys(SERVICE_NAME_1)
-    # pack_searcharea.send_keys('Data Pack 1 GB') # почему-то выбирает кто я))
 
+    # проверка ТП
+    if rate_plan_name_text == 'Katta Doimiy 40':
+        pack_searcharea.send_keys(SERVICE_NAME_1)
+        result_message = f'Подключена услуга {SERVICE_NAME_1}'
+    else:
+        pack_searcharea.send_keys(SERVICE_NAME_2)
+        result_message = f'Подключена услуга {SERVICE_NAME_2}'
+
+    time.sleep(2)
     # Выбираем первый результат поиска
+    log_step('Выбираем нужную услугу ')
     td_elements = wait.until(
         EC.presence_of_all_elements_located(
             (By.CSS_SELECTOR, "td.n-grid__td.n-grid__select[data-column-index='1']"))
@@ -148,35 +190,47 @@ def test_serv_activate(driver):
         checkbox_locator = first_td_element.find_element(By.CSS_SELECTOR, "span.n-check-checkbox")
         checkbox = wait.until(EC.element_to_be_clickable(checkbox_locator))
         checkbox.click()
-        print("Чекбокс Пакеты успешно выбран.")
+        log_step("Чекбокс Пакеты успешно выбран.")
     else:
-        print("Элементов не было найдено.")
+        log_step("Элементов не было найдено.")
 
     wait.until(
         EC.presence_of_element_located(
             (By.CSS_SELECTOR, "tr.prop-list-table__row[ng-repeat-start='pack in packsData track by pack.packId']"))
     )
-    print('Услуга Traffc+ выбран!')
+    log_step('Услуга Traffc+ выбран!')
 
+    time.sleep(2)
     select_pack_locator = (By.XPATH, '//span[@class="b-button__label" and text()="Добавить"]')
     select_pack = wait.until(EC.element_to_be_clickable(select_pack_locator))
     select_pack.click()
 
+    time.sleep(2)
 
-    # refreshing the page 3 times to make sure that the Pack has been activated
-    refresh_btn = driver.find_element(By.XPATH, '//ps-button[@ng-click="updateBalances();"]')
+    # Нажать обновить баланс 3 раза в течение 30 секунды
+    refresh_btn_locator = (By.XPATH, '//ps-button[@ng-click="updateBalances();"]')
+    refresh_btn = wait.until(EC.element_to_be_clickable(refresh_btn_locator))
     for _ in range(3):
         refresh_btn.click()
         time.sleep(10)
-    print('Кнопка обновить был нажат 3 раза в течение 30 секунды')
+    log_step('Кнопка обновить был нажат 3 раза в течение 30 секунды')
 
     balance_of_subs_after = (By.CSS_SELECTOR, 'span#ps_customer_subscriber_summary_common_balance')
     wait.until(EC.element_to_be_clickable(balance_of_subs_after))
-    balance_after_activating_rate_plan = driver.find_element(By.CSS_SELECTOR,
+    balance_after_activating_service = driver.find_element(By.CSS_SELECTOR,
                                                              'span#ps_customer_subscriber_summary_common_balance')
-    balance_after_activating_rate_plan_text = \
-        balance_after_activating_rate_plan.text.replace('UZS', '').strip().replace(' ', '').split('.')[0]
-    print(f'Баланс после подключения ТП: {int(balance_after_activating_rate_plan_text)}')
+    balance_after_activating_service_text = \
+        balance_after_activating_service.text.replace('UZS', '').strip().replace(' ', '').split('.')[0]
+    log_step(f'Баланс после подключения ТП: {int(balance_after_activating_service_text)}')
 
     time.sleep(2)
-    print('Успешно подключен пакет Traffic+!')
+    log_step('Успешно подключен пакет Traffic+!')
+
+    # Записываем данные в Excel
+    new_row = ['Подключение услуги',
+               int(balance_before_activating_service_text),
+               int(balance_after_activating_service_text),
+               result_message]
+
+    ws.append(new_row)
+    wb.save(EXCEL_FILE)

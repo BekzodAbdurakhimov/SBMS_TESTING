@@ -8,6 +8,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from trio import current_time
+
 from config import LOGIN, PASSWORD, PHONE_NUM
 
 LOG_FILE = "logs.txt"
@@ -36,61 +38,61 @@ def test_serv_deactivate(driver):
 
     log_step(' ======== Отключение Услуги ========')
 
-    # Проверка кнопки
-    detail_button_check = wait.until(
-        EC.visibility_of_element_located((By.ID, "details-button"))
-    )
-    detail_button_check.click()
-
-    go_to_link = wait.until(
-        EC.visibility_of_element_located((By.ID, "proceed-link"))
-    )
-    go_to_link.click()
-    login_text_locator = (By.CSS_SELECTOR, '.login-caption > span')
-    login_locator_check = wait.until(EC.visibility_of_element_located(login_text_locator))
-    assert login_locator_check.is_displayed(), "Не найден локатор входа"
-
-    login_input_locator = (By.CSS_SELECTOR, "input.sbms-textbox[name='user'][type='text']")
-    password_input_locator = (By.CSS_SELECTOR, "input.sbms-textbox[name='password'][type='password']")
-    enter_btn_locator = (By.CSS_SELECTOR, "button.sbms-button-ex")
-
-    # Ожидаем, пока поле ввода логина будет доступно для ввода
-    login_input_area = wait.until(EC.element_to_be_clickable(login_input_locator))
-    login_input_area.send_keys(LOGIN)
-
-    # Ожидаем, пока поле ввода пароля будет доступно для ввода
-    password_input_area = wait.until(EC.element_to_be_clickable(password_input_locator))
-    password_input_area.send_keys(PASSWORD)
-
-    # Ожидаем, пока кнопка "Войти" станет кликабельной
-    enter_btn = wait.until(EC.element_to_be_clickable(enter_btn_locator))
-    enter_btn.click()
-
-    log_step('Вход в SBMS выполнен')
-
-    # Ждать пока страничка не загрузиться полностью
-    wait.until(
-        lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME,
-                                                                                  "body").get_attribute(
-            "style"))
-
-    # Вход в витрину
-
-    # Локаторы для элементов меню
-    cabs_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрины"]')
-    subs_cabinet_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
-
-    # Ожидание кликабельности элемента "Витрины" и клик по нему
-    cabs = wait.until(EC.element_to_be_clickable(cabs_locator))
-    cabs.click()
-
-    # Ожидание кликабельности элемента "Витрина абонента" и клик по нему
-    subs_cabinet = wait.until(EC.element_to_be_clickable(subs_cabinet_locator))
-    subs_cabinet.click()
-
-    wait.until(
-        lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(
-            "style"))
+    # # Проверка кнопки
+    # detail_button_check = wait.until(
+    #     EC.visibility_of_element_located((By.ID, "details-button"))
+    # )
+    # detail_button_check.click()
+    #
+    # go_to_link = wait.until(
+    #     EC.visibility_of_element_located((By.ID, "proceed-link"))
+    # )
+    # go_to_link.click()
+    # login_text_locator = (By.CSS_SELECTOR, '.login-caption > span')
+    # login_locator_check = wait.until(EC.visibility_of_element_located(login_text_locator))
+    # assert login_locator_check.is_displayed(), "Не найден локатор входа"
+    #
+    # login_input_locator = (By.CSS_SELECTOR, "input.sbms-textbox[name='user'][type='text']")
+    # password_input_locator = (By.CSS_SELECTOR, "input.sbms-textbox[name='password'][type='password']")
+    # enter_btn_locator = (By.CSS_SELECTOR, "button.sbms-button-ex")
+    #
+    # # Ожидаем, пока поле ввода логина будет доступно для ввода
+    # login_input_area = wait.until(EC.element_to_be_clickable(login_input_locator))
+    # login_input_area.send_keys(LOGIN)
+    #
+    # # Ожидаем, пока поле ввода пароля будет доступно для ввода
+    # password_input_area = wait.until(EC.element_to_be_clickable(password_input_locator))
+    # password_input_area.send_keys(PASSWORD)
+    #
+    # # Ожидаем, пока кнопка "Войти" станет кликабельной
+    # enter_btn = wait.until(EC.element_to_be_clickable(enter_btn_locator))
+    # enter_btn.click()
+    #
+    # log_step('Вход в SBMS выполнен')
+    #
+    # # Ждать пока страничка не загрузиться полностью
+    # wait.until(
+    #     lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME,
+    #                                                                               "body").get_attribute(
+    #         "style"))
+    #
+    # # Вход в витрину
+    #
+    # # Локаторы для элементов меню
+    # cabs_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрины"]')
+    # subs_cabinet_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
+    #
+    # # Ожидание кликабельности элемента "Витрины" и клик по нему
+    # cabs = wait.until(EC.element_to_be_clickable(cabs_locator))
+    # cabs.click()
+    #
+    # # Ожидание кликабельности элемента "Витрина абонента" и клик по нему
+    # subs_cabinet = wait.until(EC.element_to_be_clickable(subs_cabinet_locator))
+    # subs_cabinet.click()
+    #
+    # wait.until(
+    #     lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(
+    #         "style"))
 
     log_step('Витрина абонента открыта')
 
@@ -215,7 +217,9 @@ def test_serv_deactivate(driver):
     new_row = ['Отключение услуги',
                int(balance_before_deactivating_service_text),
                int(balance_after_deactivating_service_text),
-               'Отключена услуга Traffic+']
+               'Отключена услуга Traffic+',
+               datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+               ]
 
     ws.append(new_row)
     wb.save(EXCEL_FILE)

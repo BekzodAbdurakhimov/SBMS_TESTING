@@ -4,3 +4,4 @@ logs.txt
 chromedriver.exe
 README.md
 SBMS_AUTOTEST_RESULTS.xlsx
+config.py

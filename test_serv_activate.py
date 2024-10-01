@@ -13,6 +13,7 @@ from config import LOGIN, PASSWORD, SERVICE_NAME_1, SERVICE_NAME_2, PHONE_NUM
 LOG_FILE = "logs.txt"
 EXCEL_FILE = "SBMS_AUTOTEST_RESULTS.xlsx"
 
+
 def log_step(message):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log_message = f"[{current_time}] {message}\n"
@@ -74,9 +75,9 @@ def test_serv_activate(driver):
     #                                                                               "body").get_attribute(
     #         "style"))
     #
-    # Вход в витрину
-
-    # Локаторы для элементов меню
+    # # Вход в витрину
+    #
+    # # Локаторы для элементов меню
     # cabs_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрины"]')
     # subs_cabinet_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
     #
@@ -87,10 +88,10 @@ def test_serv_activate(driver):
     # # Ожидание кликабельности элемента "Витрина абонента" и клик по нему
     # subs_cabinet = wait.until(EC.element_to_be_clickable(subs_cabinet_locator))
     # subs_cabinet.click()
-
-    wait.until(
-        lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(
-            "style"))
+    #
+    # wait.until(
+    #     lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(
+    #         "style"))
 
     log_step('Витрина абонента открыта')
 
@@ -162,6 +163,7 @@ def test_serv_activate(driver):
     wait.until(lambda driver: driver.find_element(*packs_table_locator).get_attribute("style") == "")
     log_step('Модальное окно услуги успешно загрузился')
 
+    # Ишем TRAFFIC+
     # Получим название ТП
     pack_searcharea_locator = (By.CSS_SELECTOR, 'input.inp-text[ng-model="grd.filter.name"]')
     pack_searcharea = wait.until(EC.element_to_be_clickable(pack_searcharea_locator))

@@ -70,12 +70,12 @@ def test_serv_deactivate(driver):
     #
     # log_step('Вход в SBMS выполнен')
     #
-    # Ждать пока страничка не загрузиться полностью
-    wait.until(
-        lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME,
-                                                                                  "body").get_attribute(
-            "style"))
-
+    # # Ждать пока страничка не загрузиться полностью
+    # wait.until(
+    #     lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME,
+    #                                                                               "body").get_attribute(
+    #         "style"))
+    #
     # # Вход в витрину
     #
     # # Локаторы для элементов меню
@@ -89,10 +89,10 @@ def test_serv_deactivate(driver):
     # # Ожидание кликабельности элемента "Витрина абонента" и клик по нему
     # subs_cabinet = wait.until(EC.element_to_be_clickable(subs_cabinet_locator))
     # subs_cabinet.click()
-
-    wait.until(
-        lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(
-            "style"))
+    #
+    # wait.until(
+    #     lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(
+    #         "style"))
 
     log_step('Витрина абонента открыта')
 
@@ -169,13 +169,9 @@ def test_serv_deactivate(driver):
     serv_search_input.send_keys('Traffic')
     log_step('Поиск услуги Traffic*')
 
-    # Locate the element
     serv_state_click_locator = (By.XPATH, '//div[@class="n-grid-title-in" and @style="z-index: 8;"]')
     serv_state_click = wait.until(EC.element_to_be_clickable(serv_state_click_locator))
-
-    # Perform a double-click
-    actions = ActionChains(driver)
-    actions.double_click(serv_state_click).perform()
+    serv_state_click.click()
 
     time.sleep(2)
     serv_search_input.click()

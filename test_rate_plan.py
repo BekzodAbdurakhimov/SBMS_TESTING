@@ -118,6 +118,8 @@ def test_rate_plan(driver):
     time.sleep(2)
 # ============================= ТЕСТИРОВАНИЕ ТП НАЧИНАЕТСЯ ЗДЕСЬ =============================
 
+# ============================= ТЕСТИРОВАНИЕ ТП НАЧИНАЕТСЯ ЗДЕСЬ =============================
+
     clients_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Клиенты"]')
     clients_btn = wait.until(EC.element_to_be_clickable(clients_btn_locator))
     clients_btn.click()

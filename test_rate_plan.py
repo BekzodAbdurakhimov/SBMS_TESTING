@@ -115,6 +115,8 @@ def test_rate_plan(driver):
     balance_before_activating_rate_plan = driver.find_element(By.CSS_SELECTOR, 'span#ps_customer_subscriber_summary_common_balance')
     balance_before_activating_rate_plan_text = balance_before_activating_rate_plan.text.replace('UZS', '').strip().replace(' ', '').split('.')[0]
     log_step(f'Баланс до подключения ТП: {int(balance_before_activating_rate_plan_text)}')
+    time.sleep(2)
+# ============================= ТЕСТИРОВАНИЕ ТП НАЧИНАЕТСЯ ЗДЕСЬ =============================
 
 # ============================= ТЕСТИРОВАНИЕ ТП НАЧИНАЕТСЯ ЗДЕСЬ =============================
 

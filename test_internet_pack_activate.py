@@ -19,7 +19,7 @@ def log_step(message):
     with open(LOG_FILE, "a") as file:
         file.write(log_message)
 
-def test_pack_activate(driver):
+def test_internet_pack_activate(driver):
     global wb, ws
 
     # Попробуйте открыть существующий файл или создать новый

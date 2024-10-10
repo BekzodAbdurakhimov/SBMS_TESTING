@@ -1,10 +1,10 @@
+import time
+from datetime import datetime
+
 from openpyxl import Workbook
 from openpyxl.reader.excel import load_workbook
 
-import time
-from datetime import datetime
 from selenium.webdriver import Keys
-
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -25,7 +25,7 @@ def log_step(message):
 def test_internet_pack_deactivate(driver):
     global wb, ws
 
-    # Попробуйте открыть существующий файл или создать новый
+    # Попробуем открыть существующий файл или создать новый
     try:
         wb = load_workbook(EXCEL_FILE)
         ws = wb.active
@@ -100,7 +100,6 @@ def test_internet_pack_deactivate(driver):
     input_tel_number_locator = (By.CLASS_NAME, "inp-text")
     input_tel_number = wait.until(EC.element_to_be_clickable(input_tel_number_locator))
     input_tel_number.send_keys(PHONE_NUM)
-    # time.sleep(5)
 
     log_step('MSISDN введен')
 
@@ -108,12 +107,10 @@ def test_internet_pack_deactivate(driver):
     search_elements_locator = (By.CSS_SELECTOR, 'ps-icon[icon="search-white"]')
     search_elements = wait.until(EC.element_to_be_clickable(search_elements_locator))
     search_elements.click()
-    # time.sleep(5)
 
     approve_num_btn_locator = (By.XPATH, "//span[@class='b-button__label' and text()='Да']/..")
     approve_num_btn = wait.until(EC.element_to_be_clickable(approve_num_btn_locator))
     approve_num_btn.click()
-    # time.sleep(5)
 
     log_step('Поиск выполнен и номер подтвержден')
 
@@ -198,7 +195,6 @@ def test_internet_pack_deactivate(driver):
     serv_deactivate_btn.click()
     time.sleep(10)
     log_step(f'Пакет {INTERNET_PACKAGE_NAME} успешно отключен')
-    # wait till the update btn gets available
     """ ОТКЛЮЧЕНИЕ ПАКЕТА ЗАКАНЧИВАЕТСЯ ЗДЕСЬ """
 
     # Нажать обновить баланс 3 раза в течение 30 секунды
@@ -211,6 +207,7 @@ def test_internet_pack_deactivate(driver):
 
     result_message = f'Отключен пакет {INTERNET_PACKAGE_NAME}'
 
+    # Проверка баланса
     balance_of_subs_after = (By.CSS_SELECTOR, 'span#ps_customer_subscriber_summary_common_balance')
     wait.until(EC.element_to_be_clickable(balance_of_subs_after))
     balance_after_deactivating_internet_pack = driver.find_element(By.CSS_SELECTOR,

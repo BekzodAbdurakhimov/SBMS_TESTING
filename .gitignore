@@ -1,3 +1,5 @@
+# Файлы которые нужно игнорировать
+
 .idea
 logs.txt
 SBMS_AUTOTEST_RESULTS.xlsx

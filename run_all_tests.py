@@ -6,6 +6,7 @@ from test_sms_pack_activate import test_pack_activate
 from test_sms_pack_deactivate import test_pack_deactivate
 from test_internet_pack_activate import test_internet_pack_activate
 from test_internet_pack_deactivate import test_internet_pack_deactivate
+from test_func_sbms import test_func_sbms
 from selenium import webdriver
 
 def run_test_rate_plan():

@@ -1,6 +1,6 @@
-from openpyxl import Workbook
 import time
 from datetime import datetime
+from openpyxl import Workbook
 from openpyxl.reader.excel import load_workbook
 
 from selenium.webdriver.support.wait import WebDriverWait
@@ -22,7 +22,7 @@ def log_step(message):
 def test_internet_pack_activate(driver):
     global wb, ws
 
-    # Попробуйте открыть существующий файл или создать новый
+    # Попробем открыть существующий файл или создать новый
     try:
         wb = load_workbook(EXCEL_FILE)
         ws = wb.active
@@ -97,7 +97,6 @@ def test_internet_pack_activate(driver):
     input_tel_number_locator = (By.CLASS_NAME, "inp-text")
     input_tel_number = wait.until(EC.element_to_be_clickable(input_tel_number_locator))
     input_tel_number.send_keys(PHONE_NUM)
-    # time.sleep(5)
 
     log_step('MSISDN введен')
 
@@ -105,12 +104,10 @@ def test_internet_pack_activate(driver):
     search_elements_locator = (By.CSS_SELECTOR, 'ps-icon[icon="search-white"]')
     search_elements = wait.until(EC.element_to_be_clickable(search_elements_locator))
     search_elements.click()
-    # time.sleep(5)
 
     approve_num_btn_locator = (By.XPATH, "//span[@class='b-button__label' and text()='Да']/..")
     approve_num_btn = wait.until(EC.element_to_be_clickable(approve_num_btn_locator))
     approve_num_btn.click()
-    # time.sleep(5)
 
     log_step('Поиск выполнен и номер подтвержден')
 
@@ -159,7 +156,7 @@ def test_internet_pack_activate(driver):
 
     # Открываем окно таблицы услуг
     packs_table = (By.CSS_SELECTOR, 'table.n-grid.n-grid_checkable')
-    WebDriverWait(driver, 60).until(lambda driver: driver.find_element(*packs_table).get_attribute("style") == "")
+    wait.until(lambda driver: driver.find_element(*packs_table).get_attribute("style") == "")
     print('Модальное окно услуги успешно загрузился')
 
     # Получим название Интернет пакета

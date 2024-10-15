@@ -78,17 +78,17 @@ def test_serv_deactivate(driver):
 
     # # Вход в витрину
     #
-    # # Локаторы для элементов меню
-    # cabs_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрины"]')
-    # subs_cabinet_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
-    #
-    # # Ожидание кликабельности элемента "Витрины" и клик по нему
-    # cabs = wait.until(EC.element_to_be_clickable(cabs_locator))
-    # cabs.click()
-    #
-    # # Ожидание кликабельности элемента "Витрина абонента" и клик по нему
-    # subs_cabinet = wait.until(EC.element_to_be_clickable(subs_cabinet_locator))
-    # subs_cabinet.click()
+    # Локаторы для элементов меню
+    cabs_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрины"]')
+    subs_cabinet_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
+
+    # Ожидание кликабельности элемента "Витрины" и клик по нему
+    cabs = wait.until(EC.element_to_be_clickable(cabs_locator))
+    cabs.click()
+
+    # Ожидание кликабельности элемента "Витрина абонента" и клик по нему
+    subs_cabinet = wait.until(EC.element_to_be_clickable(subs_cabinet_locator))
+    subs_cabinet.click()
 
     wait.until(
         lambda driver: "overflow: hidden; direction: ltr;" in driver.find_element(By.TAG_NAME, "body").get_attribute(

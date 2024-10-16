@@ -157,7 +157,7 @@ def test_internet_pack_activate(driver):
     # Открываем окно таблицы услуг
     packs_table = (By.CSS_SELECTOR, 'table.n-grid.n-grid_checkable')
     wait.until(lambda driver: driver.find_element(*packs_table).get_attribute("style") == "")
-    print('Модальное окно услуги успешно загрузился')
+    log_step('Модальное окно услуги успешно загрузился')
 
     # Получим название Интернет пакета
     pack_searcharea_locator = (By.CSS_SELECTOR, 'input.inp-text[ng-model="grd.filter.name"]')

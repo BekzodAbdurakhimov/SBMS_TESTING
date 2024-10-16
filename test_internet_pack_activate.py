@@ -33,7 +33,7 @@ def test_internet_pack_activate(driver):
     driver.get("https://sbms.ucell/ps/sbms/shell.html")
     wait = WebDriverWait(driver, 120)
 
-    log_step(' ======== Подключение Услуги ========')
+    log_step(' ======== Подключение Интернет Пакета ========')
 
     # # Проверка кнопки
     # detail_button_check = wait.until(

@@ -17,3 +17,4 @@ RATE_PLAN_NAME_1 = "Katta Doimiy 100"
 RATE_PLAN_NAME_2 = "Katta Doimiy 40"
 
 # Учетные данные пользователя
+

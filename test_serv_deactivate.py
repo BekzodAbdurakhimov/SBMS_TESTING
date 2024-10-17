@@ -9,8 +9,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from trio import current_time
+from login_x_password import LOGIN, PASSWORD
 
-from config import LOGIN, PASSWORD, PHONE_NUM
+from config import PHONE_NUM
 
 LOG_FILE = "logs.txt"
 EXCEL_FILE = "SBMS_AUTOTEST_RESULTS.xlsx"

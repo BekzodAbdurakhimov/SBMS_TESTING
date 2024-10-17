@@ -4,9 +4,8 @@ from datetime import datetime
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from trio import current_time
-
-from config import LOGIN, PASSWORD, RATE_PLAN_NAME_1, RATE_PLAN_NAME_2
+from login_x_password import LOGIN, PASSWORD
+from config import RATE_PLAN_NAME_1, RATE_PLAN_NAME_2
 import pytest
 
 LOG_FILE = "logs.txt"

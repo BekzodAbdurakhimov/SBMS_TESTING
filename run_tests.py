@@ -8,7 +8,7 @@ def save_credentials_to_config(login, password):
         with open('login_x_password.py', 'w') as config_file:
             config_file.write(f'LOGIN = "{login}"\n')
             config_file.write(f'PASSWORD = "{password}"\n')
-        messagebox.showinfo("Успех", "Данные успешно сохранены в login_x_password.py")
+        messagebox.showinfo("Успех", "Данные успешно сохранены!")
     except Exception as e:
         messagebox.showerror("Ошибка", f"Не удалось сохранить данные: {e}")
 
@@ -40,7 +40,7 @@ def run_tests():
 
 # Создание окна
 root = tk.Tk()
-root.title("Авторизация")
+root.title("Тестирование SBMS")
 
 # Метки и поля ввода
 tk.Label(root, text="Логин:").pack(pady=5)

@@ -6,8 +6,9 @@ from datetime import datetime
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from login_x_password import LOGIN, PASSWORD
 
-from config import LOGIN, PASSWORD, PHONE_NUM
+from config import PHONE_NUM
 
 LOG_FILE = "logs.txt"
 EXCEL_FILE = "SBMS_AUTOTEST_RESULTS.xlsx"

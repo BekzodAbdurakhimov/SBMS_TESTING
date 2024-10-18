@@ -15,6 +15,3 @@ SMS_PACKAGE_NAME = "150 SMS - NEW"
 # Автотматически будет менятся Тарифный план
 RATE_PLAN_NAME_1 = "Katta Doimiy 100"
 RATE_PLAN_NAME_2 = "Katta Doimiy 40"
-
-# Учетные данные пользователя
-

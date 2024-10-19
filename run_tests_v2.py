@@ -32,7 +32,7 @@ def on_submit():
 # Функция для запуска тестов
 def run_tests():
     try:
-        subprocess.run(["python", "run_all_tests.py"], check=True)
+        subprocess.run(["python", "run_all_tests_v2.py"], check=True)
         messagebox.showinfo("Успех", "Тесты успешно запущены")
     except Exception as e:
         messagebox.showerror("Ошибка", f"Не удалось запустить тесты: {e}")

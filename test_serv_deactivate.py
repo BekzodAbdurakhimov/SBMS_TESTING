@@ -152,17 +152,18 @@ def test_serv_deactivate(driver):
 
     """ ============================================= HERE GOES DEACTIVATING THE SERVICE ============================================= """
 
-
     serv_search_input_clear_locator = (By.XPATH,
                                                   "//input[@ng-model='grdPacks.filter.name' and contains(@class, 'inp-text')]")
+    # serv_search_input_clear = wait.until(EC.element_to_be_clickable(serv_search_input_clear_locator))
+    # clear_input_action = ActionChains(driver)
+    # clear_input_action.double_click(serv_search_input_clear).perform()
+    # time.sleep(2)
+    # serv_search_input_clear.send_keys(Keys.BACKSPACE)
+    # time.sleep(2)
     serv_search_input_clear = wait.until(EC.element_to_be_clickable(serv_search_input_clear_locator))
-    clear_input_action = ActionChains(driver)
-    clear_input_action.double_click(serv_search_input_clear).perform()
-    # input_element.send_keys(Keys.CONTROL, 'a')
-    time.sleep(2)
-    serv_search_input_clear.send_keys(Keys.BACKSPACE)
-    time.sleep(2)
-    log_step('Очищен поле поиска услуги')
+    serv_search_input_clear.send_keys(Keys.CONTROL + "A") # Для Mac Keys.COMMAND
+    serv_search_input_clear.send_keys(Keys.DELETE)
+    log_step('Очищен поле поиска Услуги')
 
     serv_search_input_locator = (By.XPATH,
                                             "//input[@ng-model='grdPacks.filter.name' and contains(@class, 'inp-text')]")

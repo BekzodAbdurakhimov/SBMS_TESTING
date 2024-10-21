@@ -210,7 +210,7 @@ def test_internet_pack_deactivate(driver):
     refresh_btn = wait.until(EC.element_to_be_clickable(refresh_btn_locator))
     for _ in range(3):
         refresh_btn.click()
-        time.sleep(10)
+        time.sleep(15)
     log_step('Кнопка обновить был нажат 3 раза в течение 30 секунды')
 
     result_message = f'Отключен пакет {INTERNET_PACKAGE_NAME}'

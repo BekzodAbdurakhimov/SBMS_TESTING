@@ -204,7 +204,7 @@ def test_internet_pack_activate(driver):
     refresh_btn = wait.until(EC.element_to_be_clickable(refresh_btn_locator))
     for _ in range(3):
         refresh_btn.click()
-        time.sleep(10)
+        time.sleep(15)
     log_step('Кнопка обновить был нажат 3 раза в течение 30 секунды')
 
     balance_of_subs_after = (By.CSS_SELECTOR, 'span#ps_customer_subscriber_summary_common_balance')

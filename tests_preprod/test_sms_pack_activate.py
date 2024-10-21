@@ -204,6 +204,12 @@ def test_pack_activate(driver):
 
     time.sleep(2)
 
+    trash_btn_locator = (By.XPATH, '//ps-icon[@icon="trash"]')
+    trash_btn = wait.until(EC.element_to_be_clickable(trash_btn_locator))
+    trash_btn.click()
+
+    time.sleep(2)
+
     # Нажать обновить баланс 3 раза в течение 30 секунды
     refresh_btn_locator = (By.XPATH, '//ps-button[@ng-click="updateBalances();"]')
     refresh_btn = wait.until(EC.element_to_be_clickable(refresh_btn_locator))

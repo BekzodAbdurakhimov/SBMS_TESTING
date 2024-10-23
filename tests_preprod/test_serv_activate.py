@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 
 from openpyxl.reader.excel import load_workbook
+from selenium.webdriver import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -152,6 +153,14 @@ def test_serv_activate(driver):
     packs_btn_locator = (By.XPATH, '//a[@class="n-tab__title" and text()="Пакеты"]')
     packs_btn = wait.until(EC.element_to_be_clickable(packs_btn_locator))
     packs_btn.click()
+
+    serv_search_input_clear_locator = (By.XPATH,
+                                                  "//input[@ng-model='grdPacks.filter.name' and contains(@class, 'inp-text')]")
+
+    serv_search_input_clear = wait.until(EC.element_to_be_clickable(serv_search_input_clear_locator))
+    serv_search_input_clear.send_keys(Keys.COMMAND + "A") # Для Mac Keys.COMMAND | CONTROL
+    serv_search_input_clear.send_keys(Keys.DELETE)
+    log_step('Очищен поле поиска Услуги')
 
     add_packs_btn_locator = (By.CSS_SELECTOR, 'ps-button[title="Добавить пакет"] > ps-icon[icon="row-add"]')
     add_packs_btn = wait.until(EC.element_to_be_clickable(add_packs_btn_locator))

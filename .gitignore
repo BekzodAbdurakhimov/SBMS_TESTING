@@ -6,3 +6,4 @@ results/SBMS_AUTOTEST_RESULTS.xlsx
 config/chromedriver.exe
 config/README.md
 utils/login_x_password.py
+tests_preprod/SBMS_AUTOTEST_RESULTS.xlsx

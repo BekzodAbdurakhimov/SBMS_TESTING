@@ -165,7 +165,7 @@ def test_internet_pack_deactivate(driver):
     # serv_search_input_clear.send_keys(Keys.BACKSPACE)
     # time.sleep(2)
     serv_search_input_clear = wait.until(EC.element_to_be_clickable(serv_search_input_clear_locator))
-    serv_search_input_clear.send_keys(Keys.CONTROL + "A") # Для Mac Keys.COMMAND
+    serv_search_input_clear.send_keys(Keys.COMMAND + "A") # Для Mac Keys.COMMAND
     serv_search_input_clear.send_keys(Keys.DELETE)
     log_step('Очищен поле поиска Интернет Пакета')
 

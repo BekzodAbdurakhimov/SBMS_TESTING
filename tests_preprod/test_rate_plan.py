@@ -8,6 +8,7 @@ from utils.login_x_password import LOGIN, PASSWORD
 from config.config import RATE_PLAN_NAME_1, RATE_PLAN_NAME_2
 
 LOG_FILE = "../results/logs.txt"
+EXCEL_FILE = "../results/SBMS_AUTOTEST_RESULTS.xlsx"
 
 def log_step(message):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -241,4 +242,4 @@ def test_rate_plan(driver):
     ws['C1'] = int(balance_after_activating_rate_plan_text)
     ws['E1'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    wb.save("SBMS_AUTOTEST_RESULTS.xlsx")
+    wb.save(EXCEL_FILE)

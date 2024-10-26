@@ -36,19 +36,19 @@ def test_func_sbms(driver):
 
     log_step(' ======== Подключение Услуги ========')
 
-    # # Проверка кнопки
-    # detail_button_check = wait.until(
-    #     EC.visibility_of_element_located((By.ID, "details-button"))
-    # )
-    # detail_button_check.click()
-    #
-    # go_to_link = wait.until(
-    #     EC.visibility_of_element_located((By.ID, "proceed-link"))
-    # )
-    # go_to_link.click()
-    # login_text_locator = (By.CSS_SELECTOR, '.login-caption > span')
-    # login_locator_check = wait.until(EC.visibility_of_element_located(login_text_locator))
-    # assert login_locator_check.is_displayed(), "Не найден локатор входа"
+    # Проверка кнопки
+    detail_button_check = wait.until(
+        EC.visibility_of_element_located((By.ID, "details-button"))
+    )
+    detail_button_check.click()
+
+    go_to_link = wait.until(
+        EC.visibility_of_element_located((By.ID, "proceed-link"))
+    )
+    go_to_link.click()
+    login_text_locator = (By.CSS_SELECTOR, '.login-caption > span')
+    login_locator_check = wait.until(EC.visibility_of_element_located(login_text_locator))
+    assert login_locator_check.is_displayed(), "Не найден локатор входа"
 
     """ ========================================== Запуск SBMS ========================================== """
 
@@ -238,5 +238,31 @@ def test_func_sbms(driver):
     approve_num_btn = wait.until(EC.element_to_be_clickable(approve_num_btn_locator))
     approve_num_btn.click()
 
-    log_step('success')
+    """ ========================================== «Карточка клиента»  ========================================== """
+
+    clients_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Клиенты"]')
+    clients_btn = wait.until(EC.element_to_be_clickable(clients_btn_locator))
+    clients_btn.click()
+    # time.sleep(2)
+
+    abonents_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Абоненты"]')
+    abonents_btn = wait.until(EC.element_to_be_clickable(abonents_btn_locator))
+    abonents_btn.click()
+    # time.sleep(2)
+
+    services_cathegory_btn = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Карточка абонента"]')
+    services_cathegory_btn = wait.until(EC.element_to_be_clickable(services_cathegory_btn))
+    services_cathegory_btn.click()
+
+    log_step('Перешли в карточку абонента')
+
+    # Переключение на iframe ТП
+    driver.switch_to.frame('fr3')
+
+    time.sleep(2)
+
+    change_rtpl_btn_locator = (By.ID, 'BTN_CHANGE_RTPL')
+    change_rtpl_btn = wait.until(EC.element_to_be_clickable(change_rtpl_btn_locator))
+    change_rtpl_btn.click()
+
     time.sleep(2)

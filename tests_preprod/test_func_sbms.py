@@ -210,59 +210,66 @@ def test_func_sbms(driver):
     wait.until(EC.visibility_of_element_located(extended_balance_hist_item_area_locator))
     log_step('Пункт "Расширенная история баланса" отображается | Фин. карточка')
 
-    """ ========================================== «Поиск абонента»  ========================================== """
-
-    # Витрина абонента
-    search_vitrina_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
-    search_vitrina = wait.until(EC.element_to_be_clickable(search_vitrina_locator))
-    search_vitrina.click()
-    log_step('Открытие пунтка Витрина абонента')
-
-    search_btn_locator = (By.XPATH, "//ps-button[@id='ps_customer_subscriber_summary_search' and @icon='search' and contains(@class, 'subscriber-summary-box_search-button')]")
-    search_btn = wait.until(EC.element_to_be_clickable(search_btn_locator))
-    search_btn.click()
-
-    # Ввод MSISDN
-    input_tel_number_locator = (By.CLASS_NAME, "inp-text")
-    input_tel_number = wait.until(EC.element_to_be_clickable(input_tel_number_locator))
-    input_tel_number.send_keys(PHONE_NUM)
-    # time.sleep(5)
-    log_step('MSISDN введен')
-
-    # Клик по кнопке ПОИСК
-    search_elements_locator = (By.CSS_SELECTOR, 'ps-icon[icon="search-white"]')
-    search_elements = wait.until(EC.element_to_be_clickable(search_elements_locator))
-    search_elements.click()
-
-    approve_num_btn_locator = (By.XPATH, "//span[@class='b-button__label' and text()='Да']/..")
-    approve_num_btn = wait.until(EC.element_to_be_clickable(approve_num_btn_locator))
-    approve_num_btn.click()
-
-    """ ========================================== «Карточка клиента»  ========================================== """
-
-    clients_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Клиенты"]')
-    clients_btn = wait.until(EC.element_to_be_clickable(clients_btn_locator))
-    clients_btn.click()
+    # """ ========================================== «Поиск абонента»  ========================================== """
+    #
+    # # Витрина абонента
+    # search_vitrina_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Витрина абонента"]')
+    # search_vitrina = wait.until(EC.element_to_be_clickable(search_vitrina_locator))
+    # search_vitrina.click()
+    # log_step('Открытие пунтка Витрина абонента')
+    #
+    # search_btn_locator = (By.XPATH, "//ps-button[@id='ps_customer_subscriber_summary_search' and @icon='search' and contains(@class, 'subscriber-summary-box_search-button')]")
+    # search_btn = wait.until(EC.element_to_be_clickable(search_btn_locator))
+    # search_btn.click()
+    #
+    # # Ввод MSISDN
+    # input_tel_number_locator = (By.CLASS_NAME, "inp-text")
+    # input_tel_number = wait.until(EC.element_to_be_clickable(input_tel_number_locator))
+    # input_tel_number.send_keys(PHONE_NUM)
+    # # time.sleep(5)
+    # log_step('MSISDN введен')
+    #
+    # # Клик по кнопке ПОИСК
+    # search_elements_locator = (By.CSS_SELECTOR, 'ps-icon[icon="search-white"]')
+    # search_elements = wait.until(EC.element_to_be_clickable(search_elements_locator))
+    # search_elements.click()
+    #
+    # approve_num_btn_locator = (By.XPATH, "//span[@class='b-button__label' and text()='Да']/..")
+    # approve_num_btn = wait.until(EC.element_to_be_clickable(approve_num_btn_locator))
+    # approve_num_btn.click()
+    #
+    # """ ========================================== «Карточка клиента»  ========================================== """
+    #
+    # clients_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Клиенты"]')
+    # clients_btn = wait.until(EC.element_to_be_clickable(clients_btn_locator))
+    # clients_btn.click()
     # time.sleep(2)
+    #
+    # abonents_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Абоненты"]')
+    # abonents_btn = wait.until(EC.element_to_be_clickable(abonents_btn_locator))
+    # abonents_btn.click()
+    # time.sleep(2)
+    #
+    # services_cathegory_btn = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Карточка абонента"]')
+    # services_cathegory_btn = wait.until(EC.element_to_be_clickable(services_cathegory_btn))
+    # services_cathegory_btn.click()
+    #
+    # log_step('Перешли в карточку абонента')
+    #
+    time.sleep(2)
 
+    # """ ========================================== «БФ по абоненту»  ========================================== """
     abonents_btn_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Абоненты"]')
     abonents_btn = wait.until(EC.element_to_be_clickable(abonents_btn_locator))
     abonents_btn.click()
-    # time.sleep(2)
-
-    services_cathegory_btn = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Карточка абонента"]')
-    services_cathegory_btn = wait.until(EC.element_to_be_clickable(services_cathegory_btn))
-    services_cathegory_btn.click()
-
-    log_step('Перешли в карточку абонента')
-
-    # Переключение на iframe ТП
-    driver.switch_to.frame('fr3')
-
     time.sleep(2)
 
-    change_rtpl_btn_locator = (By.ID, 'BTN_CHANGE_RTPL')
-    change_rtpl_btn = wait.until(EC.element_to_be_clickable(change_rtpl_btn_locator))
-    change_rtpl_btn.click()
+    subs_bf_locator = (By.XPATH, "//li[@id='menu-SUBS.ITEM0025']")
+    subs_bf = wait.until(EC.element_to_be_clickable(subs_bf_locator))
+    subs_bf.click()
 
-    time.sleep(2)
+    comm_stat_locator = (By.XPATH, "//li[@id='menu-SUBS_BF.ITEM130290001']")
+    comm_stat = wait.until(EC.element_to_be_clickable(comm_stat_locator))
+    comm_stat.click()
+    log_step('Переход к статусу коммутатора')
+    time.sleep(5)

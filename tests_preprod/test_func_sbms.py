@@ -273,3 +273,14 @@ def test_func_sbms(driver):
     comm_stat.click()
     log_step('Переход к статусу коммутатора')
     time.sleep(5)
+
+    simcards_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="SIM-карты"]')
+    simcards = wait.until(EC.element_to_be_clickable(simcards_locator))
+    simcards.click()
+    log_step('Открытие пунтка SIM-карты')
+
+    simcards_section_locator = (By.XPATH, '//*[@id="SSW_WORKFRAMES_CONTAINER"]')
+    wait.until(EC.presence_of_element_located(simcards_section_locator))
+    log_step('пункт SIM-карты успешно загрузился!')
+
+    time.sleep(2)

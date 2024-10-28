@@ -1,10 +1,9 @@
 # Файлы которые нужно игнорировать
 
 .idea
-results/logs.txt
-results/SBMS_AUTOTEST_RESULTS.xlsx
+/results/logs.txt
+/results/SBMS_AUTOTEST_RESULTS.xlsx
 config/chromedriver.exe
-config/README.md
-utils/login_x_password.py
-tests_preprod/SBMS_AUTOTEST_RESULTS.xlsx
-runner/SBMS_AUTOTEST_RESULTS.xlsx
+/utils/login_x_password.py
+/runner/SBMS_AUTOTEST_RESULTS.xlsx
+/tests_preprod/SBMS_AUTOTEST_RESULTS.xlsx

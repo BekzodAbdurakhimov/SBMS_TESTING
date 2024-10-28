@@ -274,6 +274,8 @@ def test_func_sbms(driver):
     log_step('Переход к статусу коммутатора')
     time.sleep(5)
 
+    # """ ========================================== «SIM-карты»  ========================================== """
+
     simcards_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="SIM-карты"]')
     simcards = wait.until(EC.element_to_be_clickable(simcards_locator))
     simcards.click()
@@ -284,3 +286,19 @@ def test_func_sbms(driver):
     log_step('пункт SIM-карты успешно загрузился!')
 
     time.sleep(2)
+
+    # """ ========================================== «Вызовы»  ========================================== """
+
+    info_of_subs_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Информация по абоненту"]')
+    info_of_subs = wait.until(EC.element_to_be_clickable(info_of_subs_locator))
+    info_of_subs.click()
+
+    calls_locator = (By.XPATH, '//a[@class="menu__a-vertical" and text()="Вызовы"]')
+    calls = wait.until(EC.element_to_be_clickable(calls_locator))
+    calls.click()
+
+    calls_section_area_locator = (By.XPATH, '//div[@id="SSW_WORKFRAMES_CONTAINER"]')
+    wait.until(EC.element_to_be_clickable(calls_section_area_locator))
+    log_step('Отображается поле Вызовы!')
+
+    log_step('Success')
